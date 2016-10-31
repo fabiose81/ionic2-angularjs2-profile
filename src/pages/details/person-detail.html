@@ -1,0 +1,55 @@
+<ion-header>
+    <ion-navbar> 
+
+<ion-buttons start>
+          <button ion-button *ngIf="!edit" clear (click)="dismiss()">
+            <ion-icon name="arrow-round-down"></ion-icon>
+          </button>
+        </ion-buttons>
+    </ion-navbar> 
+</ion-header>
+
+ <ion-content padding >
+      <form #form="ngForm" (ngSubmit)="onSubmit()">
+         <button ion-button clear  [disabled]="!form.valid"> 
+            <ion-icon name="cloud-upload"></ion-icon>
+           </button>  
+              <ion-list>
+                    <ion-item>
+                        <ion-label floating>Nome</ion-label>
+                        <ion-input type="text" name="name" required isEmpty [(ngModel)]="person.name"></ion-input>
+                      </ion-item>
+                
+                    <ion-item>
+                      <ion-label floating>Idade</ion-label>
+                      <ion-input type="text" name="age" required isEmpty [(ngModel)]="person.age"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                      <ion-label floating>Sexo</ion-label>
+                        <ion-select name="sex" required isEmpty [(ngModel)]="person.sex">
+                            <ion-option value="M">Masculino</ion-option>
+                            <ion-option value="F">Feminino</ion-option>
+                        </ion-select>
+                    </ion-item>
+              </ion-list>       
+    
+  </form>
+      <button ion-button (click)="addAddress()" *ngIf="edit" clear> 
+        <ion-icon name="add"></ion-icon>
+        <ion-icon name="home"></ion-icon>  
+      </button>  
+      
+ <ion-list>
+          <ion-item-sliding *ngFor="let address of person.address" (tap)="goToAddressDetails(address)">
+              <ion-item >
+                {{address.description}}
+              </ion-item>
+
+              <ion-item-options side="right">
+                <button ion-button color="danger" (click)="removeAddress(address)"><ion-icon name="trash"></ion-icon>Remover</button>
+              </ion-item-options>
+          </ion-item-sliding>
+      </ion-list>
+</ion-content>
+
